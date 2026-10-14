@@ -1,0 +1,44 @@
+name: Virdico — Niche Scraper Quotidien
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # 07:00 UTC = 08:00 Maroc/Paris (hiver)
+  workflow_dispatch:      # Lancement manuel depuis GitHub
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Lancer le scraper
+        run: node scraper/scraper-niche-rentable.js
+
+      - name: Envoyer le rapport par email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Virdico — Niche Rentable ${{ env.DATE }}"
+          to: om.elaidi2@gmail.com
+          from: "Virdico Scraper <${{ secrets.EMAIL_USERNAME }}>"
+          html_body: file://niche-rentable.html
+        env:
+          DATE: ${{ steps.date.outputs.date }}
+
+      - name: Sauvegarder le rapport (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: niche-rentable-${{ github.run_id }}
+          path: niche-rentable.html
+          retention-days: 30

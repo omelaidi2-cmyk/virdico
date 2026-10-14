@@ -21,24 +21,13 @@ jobs:
       - name: Lancer le scraper
         run: node scraper/scraper-niche-rentable.js
 
-      - name: Envoyer le rapport par email
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Virdico — Niche Rentable ${{ env.DATE }}"
-          to: om.elaidi2@gmail.com
-          from: "Virdico Scraper <${{ secrets.EMAIL_USERNAME }}>"
-          html_body: file://niche-rentable.html
-        env:
-          DATE: ${{ steps.date.outputs.date }}
+      - name: Déplacer le rapport dans scraper/
+        run: mv niche-rentable.html scraper/niche-rentable.html
 
-      - name: Sauvegarder le rapport (artifact)
-        uses: actions/upload-artifact@v4
-        with:
-          name: niche-rentable-${{ github.run_id }}
-          path: niche-rentable.html
-          retention-days: 30
+      - name: Committer le rapport dans le repo
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "Virdico Bot"
+          git add scraper/niche-rentable.html
+          git diff --cached --quiet || git commit -m "rapport: niche-rentable $(date +'%Y-%m-%d')"
+          git push

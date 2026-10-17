@@ -38,15 +38,16 @@
   --white: #ffffff;
   --white-a3: rgb(255 255 255 / 0.03);
   --white-a4: rgb(255 255 255 / 0.035);
+  --white-a6: rgb(255 255 255 / 0.06);
   --white-a7: rgb(255 255 255 / 0.07);
   --white-a9: rgb(255 255 255 / 0.09);
   --white-a18: rgb(255 255 255 / 0.18);
   --white-a25: rgb(255 255 255 / 0.25);
 
   /* Statuts */
-  --green-400: #4ade80;
-  --amber-400: #fbbf24;
-  --red-400: #f87171;
+  --mint-400: #5fe0a6;
+  --gold-400: #ffd27a;
+  --rose-400: #ff7b8a;
 
   /* Typographie */
   --ff-sans: var(--font-manrope, "Manrope"), ui-sans-serif, system-ui, sans-serif;
@@ -74,14 +75,14 @@
   --duration-fast: 200ms;
   --duration-base: 300ms;
   --duration-reveal: 800ms;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 
   /* ---------- 2. SÉMANTIQUE --------------------------------------------- */
 
   --background: var(--night-950);
   --background-alt: var(--night-900);
   --panel: var(--white-a4);
-  --panel-hover: var(--white-a7);
+  --panel-hover: var(--white-a6);
   --overlay: rgb(8 12 28 / 0.6);
 
   --foreground: var(--ink-50);
@@ -91,7 +92,7 @@
   --foreground-ghost: var(--ink-700);    /* bandeau défilant */
 
   --border: var(--white-a9);
-  --border-strong: var(--white-a25);
+  --border-strong: var(--white-a18);
   --border-accent: rgb(120 150 255 / 0.4);
 
   --primary: var(--electric-600);
@@ -105,12 +106,13 @@
   --cta-foreground: #050814;
   --glow: rgb(160 190 255 / 0.5);
 
-  --success: var(--green-400);
-  --warning: var(--amber-400);
-  --danger: var(--red-400);
+  --success: var(--mint-400);      /* oui, pour, coupon copié */
+  --highlight: var(--gold-400);    /* étoiles, « Top pick », expiration */
+  --danger: var(--rose-400);       /* non, contre */
 
   --ring: var(--electric-400);
-  --selection: rgb(47 91 255 / 0.45);
+  --selection: var(--electric-600);
+  --selection-foreground: var(--white);
 
   /* Dégradés signature */
   --gradient-text: linear-gradient(90deg, var(--electric-400), var(--electric-450));
@@ -119,6 +121,8 @@
   --gradient-horizon: radial-gradient(60% 75% at 50% 100%, var(--electric-500) 0%, var(--electric-700) 28%, rgb(20 40 200 / 0.4) 55%, transparent 78%);
   --gradient-thumb: radial-gradient(80% 90% at 70% 110%, var(--electric-600), var(--night-800) 55%, var(--night-700));
   --gradient-panel-top: linear-gradient(180deg, rgb(47 91 255 / 0.08), transparent);
+  --gradient-panel-diag: linear-gradient(135deg, rgb(47 91 255 / 0.16), rgb(255 255 255 / 0.02));
+  --gradient-button-blue: linear-gradient(180deg, #4b72ff, var(--electric-700));
 
   /* Largeurs */
   --width-content: 75rem;   /* 1200px */
@@ -127,10 +131,13 @@
   /* ---------- 3. COMPOSANTS --------------------------------------------- */
 
   --nav-bg: var(--overlay);
+  --nav-bg-scrolled: rgb(4 6 13 / 0.75);
   --nav-blur: 14px;
 
   --button-radius: var(--r-full);
   --button-height: 2.75rem;
+  --button-blue-shadow: 0 8px 30px rgb(47 91 255 / 0.35);
+  --button-blue-shadow-hover: 0 8px 40px rgb(47 91 255 / 0.65);
 
   --card-bg: var(--panel);
   --card-border: var(--border);
@@ -142,7 +149,7 @@
 
   --score-bg: rgb(0 0 0 / 0.45);
 
-  --prose-body: var(--ink-300);
+  --prose-body: #d4daf0;
   --prose-headings: var(--ink-50);
   --prose-code-bg: var(--white-a7);
 }

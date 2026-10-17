@@ -9,6 +9,16 @@
 
 /* Expose les tokens sémantiques comme utilitaires : bg-panel, text-foreground-muted,
    border-border, text-accent, bg-cta, rounded-card, max-w-content, etc. */
+/* Points de rupture du template audité (tous en px pour un ordre de cascade fiable) :
+   sm 561 · md 861 · lg 961 · xl 1025 · 2xl 1101 */
+@theme {
+  --breakpoint-sm: 561px;
+  --breakpoint-md: 861px;
+  --breakpoint-lg: 961px;
+  --breakpoint-xl: 1025px;
+  --breakpoint-2xl: 1101px;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-background-alt: var(--background-alt);
@@ -39,7 +49,7 @@
   --color-score: var(--score-bg);
 
   --color-success: var(--success);
-  --color-warning: var(--warning);
+  --color-highlight: var(--highlight);
   --color-danger: var(--danger);
   --color-ring: var(--ring);
 
@@ -87,10 +97,16 @@
 
   ::selection {
     background: var(--selection);
+    color: var(--selection-foreground);
   }
 
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  section[id], h2[id], h3[id] {
+    scroll-margin-top: 100px;
   }
 }

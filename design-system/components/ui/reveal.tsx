@@ -9,9 +9,14 @@ export interface RevealProps extends React.HTMLAttributes<HTMLElement> {
   delay?: number;
 }
 
-/** Fait apparaître l'élément (fondu + montée de 24px) quand il entre dans l'écran. */
+/**
+ * Fait apparaître l'élément (fondu + montée de 24px) quand il entre dans l'écran.
+ * Ajoute aussi `is-in`, qui remplit les barres de score d'un parent `vd-animate-bars`.
+ * Sans JavaScript, le contenu reste visible (voir effects.css).
+ */
 export function Reveal({ as: Tag = "div", delay = 0, className, style, ...props }: RevealProps) {
   const ref = React.useRef<HTMLElement>(null);
+  const [inView, setInView] = React.useState(false);
 
   React.useEffect(() => {
     const node = ref.current;
@@ -19,7 +24,7 @@ export function Reveal({ as: Tag = "div", delay = 0, className, style, ...props 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          node.classList.add("is-in");
+          setInView(true);
           observer.disconnect();
         }
       },
@@ -32,7 +37,7 @@ export function Reveal({ as: Tag = "div", delay = 0, className, style, ...props 
   return (
     <Tag
       ref={ref}
-      className={cn("vd-reveal", className)}
+      className={cn("vd-reveal", inView && "is-in", className)}
       style={{ transitionDelay: delay ? `${delay}ms` : undefined, ...style }}
       {...props}
     />

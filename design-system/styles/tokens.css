@@ -1,191 +1,148 @@
 /* ==========================================================================
-   Coach — Design tokens
+   Virdico — Design tokens
    3 couches : Primitive (valeurs brutes) → Sémantique (rôle) → Composant
-   Ne jamais utiliser une primitive directement dans un composant :
-   passer par la couche sémantique.
+   Thème unique, sombre (fidèle au template de référence).
+   Ne jamais utiliser une primitive directement dans un composant.
    ========================================================================== */
 
 :root {
+  color-scheme: dark;
+
   /* ---------- 1. PRIMITIVES ---------------------------------------------- */
 
-  /* Neutres (gris légèrement froids) */
-  --gray-0: #ffffff;
-  --gray-25: #fcfcfd;
-  --gray-50: #f8f9fa;
-  --gray-100: #f1f3f5;
-  --gray-200: #e6e8eb;
-  --gray-300: #d7dbdf;
-  --gray-400: #b4bac1;
-  --gray-500: #8a929b;
-  --gray-600: #687076;
-  --gray-700: #4a5056;
-  --gray-800: #2b2f33;
-  --gray-900: #17191c;
-  --gray-950: #0e0f11;
+  /* Nuit (fonds) */
+  --night-950: #04060d;
+  --night-900: #070b18;
+  --night-850: #050a22;
+  --night-800: #0a1240;
+  --night-700: #060918;
 
-  /* Accent — Iris */
-  --iris-50: #f5f5ff;
-  --iris-100: #ececfe;
-  --iris-200: #dadafc;
-  --iris-300: #bcbcf8;
-  --iris-400: #9b9bf0;
-  --iris-500: #7676e5;
-  --iris-600: #5b5bd6;
-  --iris-700: #4a4ac0;
-  --iris-800: #3c3c9b;
-  --iris-900: #27275f;
+  /* Encre (textes) */
+  --ink-50: #eef2ff;
+  --ink-200: #c7d0f0;
+  --ink-300: #c3cbe6;
+  --ink-400: #aeb8da;
+  --ink-500: #8d97b5;
+  --ink-600: #6c7594;
+  --ink-700: #5c6688;
+
+  /* Électrique (accent) */
+  --electric-300: #cfdcff;
+  --electric-400: #8fb0ff;
+  --electric-450: #6f8dff;
+  --electric-500: #3d66ff;
+  --electric-600: #2f5bff;
+  --electric-700: #1a35e0;
+
+  /* Blanc translucide */
+  --white: #ffffff;
+  --white-a3: rgb(255 255 255 / 0.03);
+  --white-a4: rgb(255 255 255 / 0.035);
+  --white-a7: rgb(255 255 255 / 0.07);
+  --white-a9: rgb(255 255 255 / 0.09);
+  --white-a18: rgb(255 255 255 / 0.18);
+  --white-a25: rgb(255 255 255 / 0.25);
 
   /* Statuts */
-  --green-50: #effaf3;
-  --green-600: #1a9e5b;
-  --green-700: #137a46;
-  --amber-50: #fff8eb;
-  --amber-600: #c27a00;
-  --red-50: #fff1f1;
-  --red-600: #dc3e42;
-  --red-700: #b42b2f;
+  --green-400: #4ade80;
+  --amber-400: #fbbf24;
+  --red-400: #f87171;
 
   /* Typographie */
-  --ff-sans: var(--font-geist-sans, "Geist"), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ff-serif: var(--font-newsreader, "Newsreader"), ui-serif, Georgia, serif;
-  --ff-mono: var(--font-geist-mono, "Geist Mono"), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --ff-sans: var(--font-manrope, "Manrope"), ui-sans-serif, system-ui, sans-serif;
+  --ff-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 
-  /* Échelle typographique (ratio ~1.25) */
-  --fs-xs: 0.75rem;     /* 12 */
-  --fs-sm: 0.875rem;    /* 14 */
-  --fs-base: 1rem;      /* 16 */
-  --fs-lg: 1.125rem;    /* 18 — corps d'article */
-  --fs-xl: 1.25rem;     /* 20 */
-  --fs-2xl: 1.5rem;     /* 24 */
-  --fs-3xl: 1.875rem;   /* 30 */
-  --fs-4xl: 2.25rem;    /* 36 */
-  --fs-5xl: 3rem;       /* 48 */
-  --fs-6xl: 3.75rem;    /* 60 */
-
-  /* Espacements (base 4px) */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-  --space-24: 6rem;
+  --fs-xs: 0.75rem;      /* 12 — eyebrow, méta */
+  --fs-sm: 0.875rem;     /* 14 — UI, extraits */
+  --fs-base: 1rem;       /* 16 */
+  --fs-lg: 1.125rem;     /* 18 — corps d'article */
+  --fs-xl: 1.375rem;     /* 22 — titre de carte */
+  --fs-2xl: 1.875rem;    /* 30 — carte à la une */
+  --fs-h2: clamp(2rem, 4.4vw, 3.375rem);      /* 32 → 54 */
+  --fs-h1: clamp(2.75rem, 7vw, 5.75rem);      /* 44 → 92 */
+  --fs-stat: 2.625rem;   /* 42 */
 
   /* Rayons */
-  --r-sm: 0.375rem;
-  --r-md: 0.5rem;
-  --r-lg: 0.75rem;
-  --r-xl: 1rem;
-  --r-full: 9999px;
+  --r-sm: 0.5rem;
+  --r-md: 0.75rem;       /* 12 — icônes */
+  --r-lg: 1.375rem;      /* 22 — cartes */
+  --r-xl: 1.75rem;       /* 28 — tableau */
+  --r-2xl: 2rem;         /* 32 — CTA */
+  --r-full: 9999px;      /* boutons, chips, nav */
 
-  /* Durées & courbes */
-  --duration-fast: 120ms;
-  --duration-base: 200ms;
+  /* Mouvement */
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+  --duration-reveal: 800ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* ---------- 2. SÉMANTIQUE (thème clair) -------------------------------- */
+  /* ---------- 2. SÉMANTIQUE --------------------------------------------- */
 
-  --background: var(--gray-0);
-  --surface: var(--gray-25);
-  --surface-muted: var(--gray-50);
-  --foreground: var(--gray-900);
-  --foreground-muted: var(--gray-700);
-  --foreground-subtle: var(--gray-600);
+  --background: var(--night-950);
+  --background-alt: var(--night-900);
+  --panel: var(--white-a4);
+  --panel-hover: var(--white-a7);
+  --overlay: rgb(8 12 28 / 0.6);
 
-  --border: var(--gray-200);
-  --border-strong: var(--gray-300);
+  --foreground: var(--ink-50);
+  --foreground-soft: var(--ink-300);     /* paragraphes mis en avant */
+  --foreground-muted: var(--ink-500);    /* extraits, méta */
+  --foreground-faint: var(--ink-600);    /* placeholders */
+  --foreground-ghost: var(--ink-700);    /* bandeau défilant */
 
-  --primary: var(--iris-600);
-  --primary-hover: var(--iris-700);
-  --primary-foreground: var(--gray-0);
-  --primary-soft: var(--iris-50);
-  --primary-soft-foreground: var(--iris-700);
+  --border: var(--white-a9);
+  --border-strong: var(--white-a25);
+  --border-accent: rgb(120 150 255 / 0.4);
 
-  --secondary: var(--gray-100);
-  --secondary-hover: var(--gray-200);
-  --secondary-foreground: var(--gray-900);
+  --primary: var(--electric-600);
+  --primary-deep: var(--electric-700);
+  --primary-bright: var(--electric-500);
+  --accent: var(--electric-400);           /* texte accent, eyebrow, liens */
+  --accent-soft: rgb(47 91 255 / 0.14);
+  --accent-soft-border: rgb(47 91 255 / 0.35);
 
-  --success: var(--green-600);
-  --success-soft: var(--green-50);
-  --warning: var(--amber-600);
-  --warning-soft: var(--amber-50);
-  --danger: var(--red-600);
-  --danger-soft: var(--red-50);
+  --cta: var(--white);                     /* bouton principal blanc */
+  --cta-foreground: #050814;
+  --glow: rgb(160 190 255 / 0.5);
 
-  --ring: var(--iris-500);
-  --link: var(--iris-700);
-  --selection: var(--iris-200);
+  --success: var(--green-400);
+  --warning: var(--amber-400);
+  --danger: var(--red-400);
 
-  --elevation-sm: 0 1px 2px rgb(16 24 40 / 0.05);
-  --elevation-md: 0 4px 12px -2px rgb(16 24 40 / 0.08), 0 2px 4px -2px rgb(16 24 40 / 0.04);
-  --elevation-lg: 0 16px 32px -8px rgb(16 24 40 / 0.12);
+  --ring: var(--electric-400);
+  --selection: rgb(47 91 255 / 0.45);
 
-  /* Largeurs de lecture */
-  --width-prose: 42rem;     /* ~70 caractères */
-  --width-content: 72rem;
+  /* Dégradés signature */
+  --gradient-text: linear-gradient(90deg, var(--electric-400), var(--electric-450));
+  --gradient-bar: linear-gradient(90deg, var(--electric-600), var(--electric-400));
+  --gradient-logo: linear-gradient(135deg, var(--white), var(--electric-400) 40%, var(--electric-600));
+  --gradient-horizon: radial-gradient(60% 75% at 50% 100%, var(--electric-500) 0%, var(--electric-700) 28%, rgb(20 40 200 / 0.4) 55%, transparent 78%);
+  --gradient-thumb: radial-gradient(80% 90% at 70% 110%, var(--electric-600), var(--night-800) 55%, var(--night-700));
+  --gradient-panel-top: linear-gradient(180deg, rgb(47 91 255 / 0.08), transparent);
 
-  /* ---------- 3. COMPOSANTS ---------------------------------------------- */
+  /* Largeurs */
+  --width-content: 75rem;   /* 1200px */
+  --width-prose: 45rem;     /* 720px */
 
-  --button-radius: var(--r-md);
-  --button-height-sm: 2rem;
-  --button-height-md: 2.5rem;
-  --button-height-lg: 3rem;
+  /* ---------- 3. COMPOSANTS --------------------------------------------- */
 
-  --card-bg: var(--background);
+  --nav-bg: var(--overlay);
+  --nav-blur: 14px;
+
+  --button-radius: var(--r-full);
+  --button-height: 2.75rem;
+
+  --card-bg: var(--panel);
   --card-border: var(--border);
-  --card-radius: var(--r-xl);
-  --card-shadow-hover: var(--elevation-md);
+  --card-border-hover: var(--border-accent);
+  --card-radius: var(--r-lg);
 
-  --badge-radius: var(--r-full);
+  --chip-border: var(--border);
+  --chip-foreground: var(--ink-200);
 
-  --input-height: 2.75rem;
-  --input-radius: var(--r-md);
+  --score-bg: rgb(0 0 0 / 0.45);
 
-  --prose-body: var(--gray-800);
-  --prose-headings: var(--gray-950);
-  --prose-quote-border: var(--iris-500);
-  --prose-code-bg: var(--gray-100);
-}
-
-/* ---------- Thème sombre (classe .dark, compatible next-themes) ---------- */
-.dark {
-  --background: var(--gray-950);
-  --surface: #131518;
-  --surface-muted: var(--gray-900);
-  --foreground: var(--gray-50);
-  --foreground-muted: var(--gray-400);
-  --foreground-subtle: var(--gray-500);
-
-  --border: #24272b;
-  --border-strong: var(--gray-700);
-
-  --primary: var(--iris-600);
-  --primary-hover: var(--iris-500);
-  --primary-foreground: var(--gray-0);
-  --primary-soft: rgb(118 118 229 / 0.14);
-  --primary-soft-foreground: var(--iris-300);
-
-  --secondary: var(--gray-900);
-  --secondary-hover: var(--gray-800);
-  --secondary-foreground: var(--gray-50);
-
-  --success-soft: rgb(26 158 91 / 0.14);
-  --warning-soft: rgb(194 122 0 / 0.14);
-  --danger-soft: rgb(220 62 66 / 0.14);
-
-  --ring: var(--iris-400);
-  --link: var(--iris-300);
-  --selection: var(--iris-800);
-
-  --elevation-sm: 0 1px 2px rgb(0 0 0 / 0.4);
-  --elevation-md: 0 4px 12px -2px rgb(0 0 0 / 0.5);
-  --elevation-lg: 0 16px 32px -8px rgb(0 0 0 / 0.6);
-
-  --card-bg: var(--surface);
-
-  --prose-body: var(--gray-300);
-  --prose-headings: var(--gray-0);
-  --prose-code-bg: var(--gray-900);
+  --prose-body: var(--ink-300);
+  --prose-headings: var(--ink-50);
+  --prose-code-bg: var(--white-a7);
 }

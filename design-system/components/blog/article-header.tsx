@@ -1,44 +1,54 @@
 import Link from "next/link";
-import { Badge } from "../ui/badge";
+import { Chip } from "../ui/chip";
 import { Author, type AuthorProps } from "./author";
+import { ScoreBadge } from "./score";
 
 export interface ArticleHeaderProps {
   title: string;
   description: string;
   category: { label: string; href: string };
-  date: string; // ISO
-  readingTime: number;
-  author: Omit<AuthorProps, "size" | "className">;
+  readingTime: string;
+  updated: string;
+  author: Omit<AuthorProps, "className">;
+  score?: number;
+  /** Mention d'affiliation affichée sous l'auteur */
+  disclosure?: string;
 }
 
-const dateFormat = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" });
-
-export function ArticleHeader({ title, description, category, date, readingTime, author }: ArticleHeaderProps) {
+/** En-tête d'article, posé sur l'horizon bleu (même langage que le hero). */
+export function ArticleHeader({
+  title,
+  description,
+  category,
+  readingTime,
+  updated,
+  author,
+  score,
+  disclosure,
+}: ArticleHeaderProps) {
   return (
-    <header className="mx-auto max-w-reading pt-16 pb-10 md:pt-24">
-      <nav aria-label="Fil d'Ariane" className="mb-6 flex items-center gap-2 text-sm text-foreground-subtle">
-        <Link href="/blog" className="hover:text-foreground">
-          Blog
-        </Link>
-        <span aria-hidden>/</span>
-        <Link href={category.href}>
-          <Badge>{category.label}</Badge>
-        </Link>
-      </nav>
+    <header className="vd-horizon pt-40 pb-16">
+      <div className="mx-auto max-w-[920px] px-5">
+        <nav aria-label="Breadcrumb" className="mb-7 flex flex-wrap items-center gap-2.5 text-[13px] text-foreground-muted">
+          <Link href="/" className="hover:text-foreground">Home</Link>
+          <span aria-hidden>/</span>
+          <Link href={category.href}><Chip>{category.label}</Chip></Link>
+          <span aria-hidden>·</span>
+          <span>{readingTime}</span>
+          <span aria-hidden>·</span>
+          <span>{updated}</span>
+          {score !== undefined && <ScoreBadge score={score} className="ml-auto" />}
+        </nav>
 
-      <h1 className="text-4xl font-semibold tracking-tight text-foreground text-balance md:text-5xl md:leading-[1.1]">
-        {title}
-      </h1>
+        <h1 className="text-[clamp(2.5rem,5.5vw,4.25rem)] font-light leading-[1.05] tracking-[-.04em] text-balance">
+          {title}
+        </h1>
+        <p className="mt-6 max-w-[640px] text-lg text-foreground-soft">{description}</p>
 
-      <p className="mt-5 text-lg text-foreground-muted text-pretty md:text-xl">{description}</p>
-
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
-        <Author {...author} />
-        <p className="text-sm text-foreground-subtle">
-          <time dateTime={date}>{dateFormat.format(new Date(date))}</time>
-          <span aria-hidden> · </span>
-          {readingTime} min de lecture
-        </p>
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/[.12] pt-6">
+          <Author {...author} />
+          {disclosure && <p className="max-w-sm text-xs text-foreground-muted">{disclosure}</p>}
+        </div>
       </div>
     </header>
   );

@@ -3,30 +3,27 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/cn";
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium " +
-    "transition-colors duration-150 ease-out " +
-    "disabled:pointer-events-none disabled:opacity-50 " +
-    "[&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold " +
+    "border border-transparent transition-all duration-300 cursor-pointer " +
+    "disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        primary: "bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
-        outline: "border border-border-strong bg-background text-foreground hover:bg-surface-muted",
-        ghost: "text-foreground-muted hover:bg-surface-muted hover:text-foreground",
-        link: "h-auto px-0 text-link underline-offset-4 hover:underline",
+        /** Bouton blanc lumineux : action principale */
+        primary: "vd-glow-hover bg-cta text-cta-foreground",
+        /** Bouton translucide bordé : actions secondaires (« All categories → ») */
+        ghost: "border-border bg-white/[.03] text-foreground hover:border-border-strong",
+        /** Bouton bleu électrique : à réserver aux CTA d'affiliation forts */
+        accent: "bg-primary text-white hover:bg-primary-deep",
+        link: "px-0 text-accent hover:underline underline-offset-4",
       },
       size: {
-        sm: "h-8 px-3 text-sm",
-        md: "h-10 px-4 text-sm",
-        lg: "h-12 px-6 text-base",
-        icon: "size-10",
+        sm: "h-9 px-4 text-[13px]",
+        md: "h-11 px-[22px] text-sm",
+        lg: "h-12 px-7 text-base",
       },
     },
-    defaultVariants: {
-      variant: "primary",
-      size: "md",
-    },
+    defaultVariants: { variant: "primary", size: "md" },
   },
 );
 

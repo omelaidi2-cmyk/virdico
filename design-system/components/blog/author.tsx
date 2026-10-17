@@ -5,12 +5,10 @@ export interface AuthorProps {
   name: string;
   role?: string;
   avatar?: string;
-  size?: "sm" | "md";
   className?: string;
 }
 
-export function Author({ name, role, avatar, size = "md", className }: AuthorProps) {
-  const px = size === "sm" ? 32 : 40;
+export function Author({ name, role, avatar, className }: AuthorProps) {
   const initials = name
     .split(" ")
     .map((part) => part[0])
@@ -20,18 +18,15 @@ export function Author({ name, role, avatar, size = "md", className }: AuthorPro
   return (
     <div className={cn("flex items-center gap-3", className)}>
       {avatar ? (
-        <Image src={avatar} alt="" width={px} height={px} className="rounded-full border border-border object-cover" />
+        <Image src={avatar} alt="" width={40} height={40} className="size-10 rounded-full border border-border object-cover" />
       ) : (
-        <span
-          style={{ width: px, height: px }}
-          className="grid place-items-center rounded-full bg-primary-soft text-xs font-semibold text-primary-soft-foreground"
-        >
+        <span className="grid size-10 place-items-center rounded-full border border-accent-soft-border bg-accent-soft text-xs font-semibold">
           {initials}
         </span>
       )}
       <div className="leading-tight">
-        <p className="text-sm font-medium text-foreground">{name}</p>
-        {role && <p className="text-xs text-foreground-subtle">{role}</p>}
+        <p className="text-sm font-semibold">{name}</p>
+        {role && <p className="text-xs text-foreground-muted">{role}</p>}
       </div>
     </div>
   );

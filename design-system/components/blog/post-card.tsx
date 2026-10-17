@@ -1,82 +1,85 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "../ui/badge";
+import { Chip } from "../ui/chip";
+import { ScoreBadge } from "./score";
 import { cn } from "../../lib/cn";
 
 export interface PostCardProps {
   href: string;
   title: string;
-  excerpt: string;
+  excerpt?: string;
   category: string;
-  date: string; // ISO
-  readingTime: number; // minutes
+  readingTime: string; // "12 min read"
+  updated?: string; // "Updated Oct 2026"
+  score?: number;
   cover?: { src: string; alt: string };
-  /** "featured" : carte large pour l'article à la une */
-  variant?: "default" | "featured";
+  /**
+   * featured : grande carte de la une (titre 30px, lien « Read the review → »)
+   * default  : carte de grille (titre 22px)
+   * compact  : ligne horizontale à vignette carrée (colonne à droite de la une)
+   */
+  variant?: "featured" | "default" | "compact";
+  ctaLabel?: string;
   className?: string;
 }
-
-const dateFormat = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" });
 
 export function PostCard({
   href,
   title,
   excerpt,
   category,
-  date,
   readingTime,
+  updated,
+  score,
   cover,
   variant = "default",
+  ctaLabel = "Read the review →",
   className,
 }: PostCardProps) {
-  const featured = variant === "featured";
+  const compact = variant === "compact";
 
   return (
-    <article
+    <Link
+      href={href}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-xl border border-border bg-background",
-        "transition-[box-shadow,border-color] duration-200 ease-out hover:border-border-strong hover:shadow-md",
-        featured && "md:grid md:grid-cols-2",
+        "group overflow-hidden rounded-card border border-card-border bg-panel transition-colors duration-300 hover:border-border-accent",
+        compact ? "grid grid-cols-[100px_1fr] sm:grid-cols-[140px_1fr]" : "flex flex-col",
         className,
       )}
     >
-      {cover && (
-        <div className={cn("relative aspect-[16/9] overflow-hidden bg-surface-muted", featured && "md:aspect-auto")}>
+      <div className={cn("vd-thumb relative overflow-hidden", compact ? "h-full min-h-28" : "aspect-video")}>
+        {cover && (
           <Image
             src={cover.src}
             alt={cover.alt}
             fill
-            sizes={featured ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 1024px) 33vw, 100vw"}
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            sizes={compact ? "140px" : variant === "featured" ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 33vw, 100vw"}
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
-        </div>
-      )}
+        )}
+        {score !== undefined && !compact && <ScoreBadge score={score} className="absolute top-3.5 right-3.5" />}
+      </div>
 
-      <div className={cn("flex flex-1 flex-col gap-3 p-6", featured && "md:justify-center md:p-10")}>
-        <div className="flex items-center gap-3 text-xs text-foreground-subtle">
-          <Badge>{category}</Badge>
-          <time dateTime={date}>{dateFormat.format(new Date(date))}</time>
-          <span aria-hidden>·</span>
-          <span>{readingTime} min de lecture</span>
+      <div className={cn("flex flex-1 flex-col gap-2.5", compact ? "p-[18px]" : "p-6")}>
+        <div className="flex flex-wrap items-center gap-2.5 text-xs text-foreground-muted">
+          <Chip>{category}</Chip>
+          <span>{readingTime}</span>
+          {updated && <span>{updated}</span>}
         </div>
 
         <h3
           className={cn(
-            "font-semibold tracking-tight text-foreground text-balance",
-            featured ? "text-2xl md:text-3xl" : "text-lg",
+            "font-medium leading-tight tracking-[-.025em] text-balance",
+            variant === "featured" ? "text-2xl md:text-[30px]" : compact ? "text-[17px]" : "text-[22px]",
           )}
         >
-          <Link href={href} className="after:absolute after:inset-0">
-            {title}
-          </Link>
+          {title}
         </h3>
 
-        <p className={cn("text-foreground-muted line-clamp-3", featured ? "text-base" : "text-sm")}>{excerpt}</p>
+        {excerpt && !compact && <p className="text-sm text-foreground-muted">{excerpt}</p>}
 
-        <span className="mt-auto pt-2 text-sm font-medium text-link">
-          Lire l'article <span className="inline-block transition-transform group-hover:translate-x-0.5">→</span>
-        </span>
+        {variant === "featured" && <span className="mt-auto pt-2 text-sm font-semibold text-accent">{ctaLabel}</span>}
       </div>
-    </article>
+    </Link>
   );
 }

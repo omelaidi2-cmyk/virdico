@@ -1,21 +1,24 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { PillForm } from "../ui/pill-form";
+import { Eyebrow } from "../ui/section-heading";
 import { cn } from "../../lib/cn";
 
 export interface NewsletterCtaProps {
+  eyebrow?: string;
   title?: string;
   description?: string;
-  /** Appelée avec l'email ; brancher ici Resend, Brevo, ConvertKit… */
+  /** Server Action ou appel API (Resend, Beehiiv, ConvertKit…) */
   onSubscribe: (email: string) => Promise<void>;
   className?: string;
 }
 
+/** Grand bloc arrondi avec lueur bleue montante. */
 export function NewsletterCta({
-  title = "Recevez nos meilleurs conseils",
-  description = "Un email par semaine. Des méthodes concrètes, zéro spam. Désinscription en un clic.",
+  eyebrow = "Weekly deals",
+  title = "Exclusive SaaS discounts, every Friday.",
+  description = "Get the best software deals and our newest reviews in your inbox. No spam, unsubscribe anytime.",
   onSubscribe,
   className,
 }: NewsletterCtaProps) {
@@ -23,7 +26,7 @@ export function NewsletterCta({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const email = new FormData(event.currentTarget).get("email") as string;
+    const email = String(new FormData(event.currentTarget).get("email"));
     setStatus("loading");
     try {
       await onSubscribe(email);
@@ -34,36 +37,29 @@ export function NewsletterCta({
   }
 
   return (
-    <section className={cn("rounded-xl border border-border bg-surface p-8 md:p-10", className)}>
-      <h2 className="text-2xl font-semibold tracking-tight text-foreground">{title}</h2>
-      <p className="mt-2 max-w-md text-foreground-muted">{description}</p>
+    <section
+      className={cn("vd-cta-glow rounded-cta border border-border px-5 py-16 text-center sm:px-10 sm:py-20", className)}
+    >
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h2 className="mx-auto mb-4 max-w-[720px] text-h2 font-light">{title}</h2>
+      <p className="mx-auto mb-[30px] max-w-[520px] text-foreground-soft">{description}</p>
 
       {status === "done" ? (
-        <p role="status" className="mt-6 text-sm font-medium text-success">
-          Merci ! Vérifiez votre boîte mail pour confirmer l'inscription.
+        <p role="status" className="font-semibold text-accent">
+          You're in. Check your inbox to confirm.
         </p>
       ) : (
-        <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <label htmlFor="newsletter-email" className="sr-only">
-            Adresse email
-          </label>
-          <Input
-            id="newsletter-email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            placeholder="vous@exemple.com"
-            className="sm:max-w-xs"
-          />
-          <Button type="submit" size="lg" disabled={status === "loading"} className="h-11">
-            {status === "loading" ? "Inscription…" : "S'abonner"}
-          </Button>
-        </form>
+        <PillForm
+          onSubmit={handleSubmit}
+          pending={status === "loading"}
+          className="mx-auto max-w-[460px]"
+          input={{ name: "email", type: "email", required: true, autoComplete: "email", placeholder: "your@email.com", "aria-label": "Email" }}
+          submitLabel={status === "loading" ? "Subscribing…" : "Subscribe"}
+        />
       )}
       {status === "error" && (
         <p role="alert" className="mt-3 text-sm text-danger">
-          Une erreur est survenue. Réessayez dans un instant.
+          Something went wrong. Please try again.
         </p>
       )}
     </section>

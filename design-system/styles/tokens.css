@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Coach — Design tokens
+   3 couches : Primitive (valeurs brutes) → Sémantique (rôle) → Composant
+   Ne jamais utiliser une primitive directement dans un composant :
+   passer par la couche sémantique.
+   ========================================================================== */
+
+:root {
+  /* ---------- 1. PRIMITIVES ---------------------------------------------- */
+
+  /* Neutres (gris légèrement froids) */
+  --gray-0: #ffffff;
+  --gray-25: #fcfcfd;
+  --gray-50: #f8f9fa;
+  --gray-100: #f1f3f5;
+  --gray-200: #e6e8eb;
+  --gray-300: #d7dbdf;
+  --gray-400: #b4bac1;
+  --gray-500: #8a929b;
+  --gray-600: #687076;
+  --gray-700: #4a5056;
+  --gray-800: #2b2f33;
+  --gray-900: #17191c;
+  --gray-950: #0e0f11;
+
+  /* Accent — Iris */
+  --iris-50: #f5f5ff;
+  --iris-100: #ececfe;
+  --iris-200: #dadafc;
+  --iris-300: #bcbcf8;
+  --iris-400: #9b9bf0;
+  --iris-500: #7676e5;
+  --iris-600: #5b5bd6;
+  --iris-700: #4a4ac0;
+  --iris-800: #3c3c9b;
+  --iris-900: #27275f;
+
+  /* Statuts */
+  --green-50: #effaf3;
+  --green-600: #1a9e5b;
+  --green-700: #137a46;
+  --amber-50: #fff8eb;
+  --amber-600: #c27a00;
+  --red-50: #fff1f1;
+  --red-600: #dc3e42;
+  --red-700: #b42b2f;
+
+  /* Typographie */
+  --ff-sans: var(--font-geist-sans, "Geist"), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ff-serif: var(--font-newsreader, "Newsreader"), ui-serif, Georgia, serif;
+  --ff-mono: var(--font-geist-mono, "Geist Mono"), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Échelle typographique (ratio ~1.25) */
+  --fs-xs: 0.75rem;     /* 12 */
+  --fs-sm: 0.875rem;    /* 14 */
+  --fs-base: 1rem;      /* 16 */
+  --fs-lg: 1.125rem;    /* 18 — corps d'article */
+  --fs-xl: 1.25rem;     /* 20 */
+  --fs-2xl: 1.5rem;     /* 24 */
+  --fs-3xl: 1.875rem;   /* 30 */
+  --fs-4xl: 2.25rem;    /* 36 */
+  --fs-5xl: 3rem;       /* 48 */
+  --fs-6xl: 3.75rem;    /* 60 */
+
+  /* Espacements (base 4px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Rayons */
+  --r-sm: 0.375rem;
+  --r-md: 0.5rem;
+  --r-lg: 0.75rem;
+  --r-xl: 1rem;
+  --r-full: 9999px;
+
+  /* Durées & courbes */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---------- 2. SÉMANTIQUE (thème clair) -------------------------------- */
+
+  --background: var(--gray-0);
+  --surface: var(--gray-25);
+  --surface-muted: var(--gray-50);
+  --foreground: var(--gray-900);
+  --foreground-muted: var(--gray-700);
+  --foreground-subtle: var(--gray-600);
+
+  --border: var(--gray-200);
+  --border-strong: var(--gray-300);
+
+  --primary: var(--iris-600);
+  --primary-hover: var(--iris-700);
+  --primary-foreground: var(--gray-0);
+  --primary-soft: var(--iris-50);
+  --primary-soft-foreground: var(--iris-700);
+
+  --secondary: var(--gray-100);
+  --secondary-hover: var(--gray-200);
+  --secondary-foreground: var(--gray-900);
+
+  --success: var(--green-600);
+  --success-soft: var(--green-50);
+  --warning: var(--amber-600);
+  --warning-soft: var(--amber-50);
+  --danger: var(--red-600);
+  --danger-soft: var(--red-50);
+
+  --ring: var(--iris-500);
+  --link: var(--iris-700);
+  --selection: var(--iris-200);
+
+  --elevation-sm: 0 1px 2px rgb(16 24 40 / 0.05);
+  --elevation-md: 0 4px 12px -2px rgb(16 24 40 / 0.08), 0 2px 4px -2px rgb(16 24 40 / 0.04);
+  --elevation-lg: 0 16px 32px -8px rgb(16 24 40 / 0.12);
+
+  /* Largeurs de lecture */
+  --width-prose: 42rem;     /* ~70 caractères */
+  --width-content: 72rem;
+
+  /* ---------- 3. COMPOSANTS ---------------------------------------------- */
+
+  --button-radius: var(--r-md);
+  --button-height-sm: 2rem;
+  --button-height-md: 2.5rem;
+  --button-height-lg: 3rem;
+
+  --card-bg: var(--background);
+  --card-border: var(--border);
+  --card-radius: var(--r-xl);
+  --card-shadow-hover: var(--elevation-md);
+
+  --badge-radius: var(--r-full);
+
+  --input-height: 2.75rem;
+  --input-radius: var(--r-md);
+
+  --prose-body: var(--gray-800);
+  --prose-headings: var(--gray-950);
+  --prose-quote-border: var(--iris-500);
+  --prose-code-bg: var(--gray-100);
+}
+
+/* ---------- Thème sombre (classe .dark, compatible next-themes) ---------- */
+.dark {
+  --background: var(--gray-950);
+  --surface: #131518;
+  --surface-muted: var(--gray-900);
+  --foreground: var(--gray-50);
+  --foreground-muted: var(--gray-400);
+  --foreground-subtle: var(--gray-500);
+
+  --border: #24272b;
+  --border-strong: var(--gray-700);
+
+  --primary: var(--iris-600);
+  --primary-hover: var(--iris-500);
+  --primary-foreground: var(--gray-0);
+  --primary-soft: rgb(118 118 229 / 0.14);
+  --primary-soft-foreground: var(--iris-300);
+
+  --secondary: var(--gray-900);
+  --secondary-hover: var(--gray-800);
+  --secondary-foreground: var(--gray-50);
+
+  --success-soft: rgb(26 158 91 / 0.14);
+  --warning-soft: rgb(194 122 0 / 0.14);
+  --danger-soft: rgb(220 62 66 / 0.14);
+
+  --ring: var(--iris-400);
+  --link: var(--iris-300);
+  --selection: var(--iris-800);
+
+  --elevation-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --elevation-md: 0 4px 12px -2px rgb(0 0 0 / 0.5);
+  --elevation-lg: 0 16px 32px -8px rgb(0 0 0 / 0.6);
+
+  --card-bg: var(--surface);
+
+  --prose-body: var(--gray-300);
+  --prose-headings: var(--gray-0);
+  --prose-code-bg: var(--gray-900);
+}

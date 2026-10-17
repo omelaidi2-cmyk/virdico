@@ -49,3 +49,8 @@ export { PricingPlans } from "./article/pricing-plans";
 export { FeatureComparison } from "./article/feature-comparison";
 export { ShareBar } from "./article/share-bar";
 export { ArticleSidebar, QuickFacts, DealBox, AlternativesBox } from "./article/sidebar";
+
+// Bannières (système BLASSA)
+export { Banner, BannerBody } from "./banners/banner";
+export { StickyBanner } from "./banners/sticky-banner";
+export type { BannerCreative, BannerMedia, BannerSize } from "./banners/types";

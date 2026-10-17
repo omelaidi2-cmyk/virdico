@@ -8,13 +8,11 @@ Stack : **Next.js (App Router) + Tailwind CSS v4**.
 | Dossier | Contenu |
 |---|---|
 | `preview/` | Templates HTML audités (référence visuelle, ouvrables tels quels dans un navigateur) |
-| `styles/` | `tokens.css` (variables), `effects.css` (effets signature), `theme.css` (Tailwind v4) |
-| `components/` | Composants React : `ui/`, `site/`, `home/`, `article/` |
+| `styles/` | `tokens.css` (variables), `effects.css` (effets signature), `banners.css` (bannières BLASSA), `theme.css` (Tailwind v4) |
+| `components/` | Composants React : `ui/`, `site/`, `home/`, `article/`, `banners/` |
 | `lib/` | `cn.ts` (fusion de classes), `seo.ts` (données structurées schema.org) |
-| `examples/` | Les deux pages reconstruites avec les composants : `home-page.tsx`, `review-page.tsx` |
 
-Les composants et les exemples ont été compilés dans une vraie application Next.js 15 (`next build`) et
-rendus à 1280px et 390px : aucune erreur d'hydratation, aucun défilement horizontal.
+Le site complet qui utilise ce design system est à la racine du dépôt (voir `../README.md`).
 
 ---
 
@@ -89,7 +87,7 @@ Les blocs d'article portent `not-prose` : placés dans `<Prose>`, ils gardent le
 
 ## 4. Structure des pages
 
-**Accueil** — voir `examples/home-page.tsx`
+**Accueil** — voir `app/page.tsx`
 ```
 SkipLink · SiteHeader
 Hero               annonce · H1 · recherche + liens populaires · chiffres clés · indicateur de scroll
@@ -103,7 +101,7 @@ NewsletterCta
 SiteFooter · CookieBanner · BackToTop
 ```
 
-**Page de test** — voir `examples/review-page.tsx`
+**Page de test** — voir `components/templates/article.tsx`
 ```
 SkipLink · ReadingProgress · SiteHeader (CTA = lien d'affiliation)
 ArticleHero        fil d'Ariane · H1 · chapô · auteur · badges de confiance
@@ -133,6 +131,7 @@ StickyCta (mobile) · SiteFooter · CookieBanner · BackToTop
    @import "tailwindcss";
    @import "../design-system/styles/tokens.css";
    @import "../design-system/styles/effects.css" layer(components);
+   @import "../design-system/styles/banners.css" layer(components);
    @import "../design-system/styles/theme.css";
    @source "../design-system";
    ```
@@ -150,16 +149,37 @@ StickyCta (mobile) · SiteFooter · CookieBanner · BackToTop
      );
    }
    ```
-4. Copier `examples/home-page.tsx` dans `app/page.tsx` et `examples/review-page.tsx` dans `app/[slug]/page.tsx`, puis remplacer les `EDIT`.
-5. Newsletter : `examples/actions.ts` est une Server Action à brancher sur le fournisseur d'emailing.
-6. Cookies : passer `onConsent` à `CookieBanner` et ne charger analytics et pixels d'affiliation que si `consent === "all"`.
+4. Newsletter : `app/actions.ts` est une Server Action à brancher sur le fournisseur d'emailing.
+5. Cookies : passer `onConsent` à `CookieBanner` et ne charger analytics et pixels d'affiliation que si `consent === "all"`.
 
-## 7. Corrections apportées aux templates audités
+## 7. Système de bannières (BLASSA)
+
+Les bannières ont leur propre design system, déclaré **en portée locale** sur `.blassa` et `.sticky-cta`
+(`styles/banners.css`) pour ne jamais modifier les couleurs du site :
+
+| Token | Valeur | Usage |
+|---|---|---|
+| `--bg` | `#07080B` | Fond |
+| `--volt` | `#C6FF33` | Accent (vert néon) |
+| `--t1` / `--t2` | `#F2F4F8` / `#A9B1C2` | Textes |
+| `--surf1` | `#0E1116` | Surfaces, hachures |
+| `--brd` | `#232A38` | Bordures |
+| `--fd` / `--fs` / `--fm` | Chakra Petch / Inter / JetBrains Mono | Titres / texte / libellés |
+
+Composants : `<Banner size="wide | sky | box | flow | inline | mobile-mid" creative={…} />` et `<StickyBanner creative={…} />`.
+
+- **Vide** : fond hachuré + `// SPONSORED`, dimensions, lien « Advertise with us ».
+- **Rempli** : image ou vidéo (`.webm` + `.mp4`) pixel-perfect, 0 padding, lien `/play/[slug]/` en `rel="sponsored nofollow"`,
+  avec une petite mention « Sponsored » au-dessus (obligation légale de signaler la publicité).
+- **Sticky** : fermable (mémorisé pour la session) ; il publie sa hauteur dans `--sticky-banner-h` pour que la barre CTA mobile,
+  le bouton « retour en haut » et le bandeau cookies se décalent au-dessus de lui.
+
+## 8. Corrections apportées aux templates audités
 
 - Sans JavaScript, les barres de score (accueil et article) et l'anneau du verdict restaient vides : ils s'affichent maintenant remplis.
 - Le bouton « Auto » de l'offre sans code ne faisait rien au clic : il est remplacé par le texte « Applied automatically ».
 
-## 8. Avant la mise en ligne
+## 9. Avant la mise en ligne
 
 - [ ] Remplacer tous les `EDIT` : liens d'affiliation, vrais chiffres, vraies offres, nom et photo de l'auteur, images Open Graph (1200×630)
 - [ ] Réponses de la FAQ identiques dans la page et dans le JSON-LD

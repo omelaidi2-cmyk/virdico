@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="728" height="146" viewBox="0 0 728 146">
+<rect width="728" height="146" fill="#07080b"/>
+<rect x=".5" y=".5" width="727" height="145" fill="none" stroke="#232a38"/>
+<circle cx="451.36" cy="160.60000000000002" r="254.79999999999998" fill="#c6ff33" opacity=".07"/>
+<text x="20" y="62.5" font-family="JetBrains Mono, monospace" font-size="12.6" fill="#c6ff33">// VIRDICO DEALS</text>
+<text x="20" y="95.5" font-family="Chakra Petch, sans-serif" font-weight="600" font-size="30" fill="#f2f4f8">Exclusive SaaS deals, every Friday</text>
+<rect x="558" y="53.0" width="150" height="40" rx="20" fill="#c6ff33"/>
+<text x="633" y="78.0" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#07080b">Get deals</text>
+</svg>

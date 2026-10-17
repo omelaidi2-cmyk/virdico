@@ -56,7 +56,7 @@ export function CookieBanner({ privacyHref = "/privacy-policy/", onConsent }: Co
     <div
       role="dialog"
       aria-label="Cookie consent"
-      className="vd-no-print fixed inset-x-3 bottom-3 z-[80] rounded-[20px] border border-border bg-[rgb(8_12_28/.92)] p-5 text-[13px] text-foreground-soft shadow-[0_20px_60px_rgb(0_0_0/.5)] backdrop-blur-[16px] sm:right-auto sm:left-4 sm:bottom-4 sm:max-w-[400px]"
+      className="vd-no-print fixed inset-x-3 bottom-[calc(12px+var(--sticky-banner-h,0px))] z-[80] rounded-[20px] border border-border bg-[rgb(8_12_28/.92)] p-5 text-[13px] text-foreground-soft shadow-[0_20px_60px_rgb(0_0_0/.5)] backdrop-blur-[16px] sm:right-auto sm:left-4 sm:bottom-[calc(16px+var(--sticky-banner-h,0px))] sm:max-w-[400px]"
     >
       <strong className="mb-1.5 block text-[15px] text-foreground">We use cookies 🍪</strong>
       We use essential cookies to run the site and, with your consent, analytics and affiliate cookies. See our{" "}

@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@import "../design-system/styles/tokens.css";
+@import "../design-system/styles/effects.css" layer(components);
+@import "../design-system/styles/banners.css" layer(components);
+@import "../design-system/styles/theme.css";
+
+@source "../design-system";
+@source "../content";

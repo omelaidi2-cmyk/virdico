@@ -53,7 +53,7 @@ export function AffiliateLink({
     <a
       rel="sponsored nofollow noopener"
       target="_blank"
-      className={cn(buttonVariants({ variant, size }), className)}
+      className={cn("not-prose", buttonVariants({ variant, size }), className)}
       {...props}
     />
   );

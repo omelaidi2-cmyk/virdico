@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Logo } from "../ui/logo";
 import { buttonVariants, iconButtonClass } from "../ui/button";
 import { CloseIcon, MenuIcon } from "../ui/icons";
@@ -16,7 +17,7 @@ export interface SiteHeaderProps {
   items: NavItem[];
   /** Liens en plus dans le menu mobile (« How we test ») */
   mobileExtra?: NavItem[];
-  /** href de l'élément actif */
+  /** href de l'élément actif (déduit de l'URL si absent) */
   current?: string;
   /** Bouton blanc à droite. Sur une page de test : le lien d'affiliation de l'outil. */
   cta: NavItem & { sponsored?: boolean };
@@ -27,6 +28,9 @@ export interface SiteHeaderProps {
  * Sous 960px : bouton menu qui ouvre un panneau plein écran (Échap pour fermer).
  */
 export function SiteHeader({ items, mobileExtra = [], current, cta }: SiteHeaderProps) {
+  const pathname = usePathname() ?? "/";
+  const active =
+    current ?? items.find((item) => (item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)))?.href;
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const openRef = React.useRef<HTMLButtonElement>(null);
@@ -70,7 +74,7 @@ export function SiteHeader({ items, mobileExtra = [], current, cta }: SiteHeader
               <Link
                 key={item.href}
                 href={item.href}
-                aria-current={item.href === current ? "page" : undefined}
+                aria-current={item.href === active ? "page" : undefined}
                 className="rounded-full px-4 py-2 text-sm text-foreground-muted transition-colors duration-200 hover:bg-white/[.07] hover:text-foreground aria-[current=page]:bg-white/[.07] aria-[current=page]:text-foreground"
               >
                 {item.label}

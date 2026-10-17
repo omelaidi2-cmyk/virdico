@@ -38,7 +38,9 @@ export function BackToTop({ href = "#main", raised = false }: { href?: string; r
       className={cn(
         iconButtonClass,
         "vd-no-print fixed right-4 z-[60] transition-all duration-300",
-        raised ? "bottom-[84px] md:bottom-4" : "bottom-4",
+        raised
+          ? "bottom-[calc(84px+var(--sticky-banner-h,0px))] md:bottom-[calc(16px+var(--sticky-banner-h,0px))]"
+          : "bottom-[calc(16px+var(--sticky-banner-h,0px))]",
         show ? "visible opacity-100" : "invisible translate-y-2.5 opacity-0",
       )}
     >
@@ -93,17 +95,17 @@ export function StickyCta({ tool, score, note, href, label = "Try free", targetI
   return (
     <div
       className={cn(
-        "vd-no-print fixed inset-x-3 bottom-3 z-[55] flex items-center justify-between gap-2.5 rounded-full border border-border bg-[rgb(8_12_30/.9)] py-2.5 pr-2.5 pl-[18px] text-sm backdrop-blur-[14px] transition-transform duration-[350ms] ease-out md:hidden",
+        "vd-no-print fixed inset-x-3 bottom-[calc(12px+var(--sticky-banner-h,0px))] z-[55] flex items-center justify-between gap-2.5 rounded-full border border-border bg-[rgb(8_12_30/.9)] py-2.5 pr-2.5 pl-[18px] text-sm backdrop-blur-[14px] transition-transform duration-[350ms] ease-out md:hidden",
         show ? "translate-y-0" : "translate-y-[140%]",
       )}
-      aria-hidden={!show}
+      inert={!show}
     >
       <span>
         <b className="font-semibold">{tool}</b> · {score.toFixed(1)}/10
         <br />
         <small className="text-highlight">{note}</small>
       </span>
-      <a href={href} rel="sponsored nofollow noopener" target="_blank" tabIndex={show ? 0 : -1} className="vd-button-blue inline-flex rounded-full px-[22px] py-3 text-sm font-semibold">
+      <a href={href} rel="sponsored nofollow noopener" target="_blank" className="vd-button-blue inline-flex rounded-full px-[22px] py-3 text-sm font-semibold">
         {label}
       </a>
     </div>
